@@ -27,10 +27,10 @@ router.post('/login', (req, res, next) => {
         console.log('Login: ', req.body, user, err, info)
         if (err) return next(err)
         if (user) {
-            const token = jwt.sign(user, db.SECRET,{
-                expiresIn: '7d'
+              const token = jwt.sign(user, db.SECRET,{
+                expiresIn: req.body.rememberme ?'7d':'1d'
               })
-            return res.json({ user, token })
+            return res.json({ user, token })  
         } else
             return res.status(422).json(info)
     })(req, res, next)
